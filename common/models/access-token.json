@@ -1,5 +1,19 @@
 {
   "name": "AccessToken",
+  "foreignKeys": {
+    "fk_order_advisorId": {
+      "name": "fk_accesstoken_userId",
+      "entity": "User",
+      "entityKey": "id",
+      "foreignKey": "userId"
+    }
+  },
+  "indexes": {
+    "idx_accesstoken_userId": {
+      "keys": "userId",
+      "options": {}
+    }
+  },
   "properties": {
     "id": {
       "type": "string",
@@ -18,6 +32,13 @@
     "created": {
       "type": "Date",
       "defaultFn": "now"
+    },
+    "userId": {
+      "type": "string",
+      "postgresql": {
+        "dataType": "uuid",
+        "columnName": "userId"
+      }
     }
   },
   "relations": {

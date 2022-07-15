@@ -1,19 +1,51 @@
 {
   "name": "RoleMapping",
   "description": "Map principals to roles",
+  "foreignKeys": {
+    "fk_rolemapping-roleId": {
+      "name": "fk_rolemapping-roleId",
+      "entity": "Roler",
+      "entityKey": "id",
+      "foreignKey": "roleId"
+    }
+  },
+  "indexes": {
+    "idx_rolemapping-roleId": {
+      "keys": "roleId",
+      "options": {}
+    }
+  },
   "properties": {
     "id": {
-      "type": "string",
       "id": true,
-      "generated": true
+      "type": "string",
+      "required": true,
+      "defaultFn": "uuid",
+      "postgresql": {
+        "dataType": "uuid"
+      }
     },
     "principalType": {
       "type": "string",
-      "description": "The principal type, such as USER, APPLICATION, ROLE, or user model name in case of multiple user models"
+      "description": "The principal type, such as USER, APPLICATION, ROLE, or user model name in case of multiple user models",
+      "postgresql": {
+        "columnName": "principalType"
+      }
     },
     "principalId": {
       "type": "string",
-      "index": true
+      "index": true,
+      "postgresql": {
+        "dataType": "uuid",
+        "columnName": "principalId"
+      }
+    },
+    "roleId": {
+      "type": "string",
+      "postgresql": {
+        "dataType": "uuid",
+        "columnName": "roleId"
+      }
     }
   },
   "relations": {

@@ -1,11 +1,14 @@
 {
   "name": "Role",
   "properties": {
-
     "id": {
-      "type": "string",
       "id": true,
-      "generated": true
+      "type": "string",
+      "required": true,
+      "defaultFn": "uuid",
+      "postgresql": {
+        "dataType": "uuid"
+      }
     },
     "name": {
       "type": "string",
