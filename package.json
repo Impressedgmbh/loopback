@@ -49,7 +49,7 @@
     "inflection": "^1.6.0",
     "isemail": "^3.2.0",
     "loopback-connector-remote": "^3.0.0",
-    "loopback-datasource-juggler": "github:codepushr/loopback-datasource-juggler",
+    "loopback-datasource-juggler": "github:Impressedgmbh/loopback-datasource-juggler#iws-pro",
     "loopback-filters": "^1.0.0",
     "loopback-phase": "^3.0.0",
     "nodemailer": "^6.4.16",
