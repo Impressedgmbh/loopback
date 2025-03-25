@@ -1,58 +1,65 @@
 {
-  "name": "AccessToken",
-  "foreignKeys": {
-    "fk_order_advisorId": {
-      "name": "fk_accesstoken_userId",
-      "entity": "User",
-      "entityKey": "id",
-      "foreignKey": "userId"
-    }
-  },
-  "indexes": {
-    "idx_accesstoken_userId": {
-      "keys": "userId",
-      "options": {}
-    }
-  },
-  "properties": {
-    "id": {
-      "type": "string",
-      "id": true
-    },
-    "ttl": {
-      "type": "number",
-      "ttl": true,
-      "default": 1209600,
-      "description": "time to live in seconds (2 weeks by default)"
-    },
-    "scopes": {
-      "type": ["string"],
-      "description": "Array of scopes granted to this access token."
-    },
-    "created": {
-      "type": "Date",
-      "defaultFn": "now"
-    },
-    "userId": {
-      "type": "string",
-      "postgresql": {
-        "dataType": "uuid",
-        "columnName": "userId"
-      }
-    }
-  },
-  "relations": {
-    "user": {
-      "type": "belongsTo",
-      "model": "User",
-      "foreignKey": "userId"
-    }
-  },
-  "acls": [
-    {
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "DENY"
-    }
-  ]
+	"name": "AccessToken",
+	"foreignKeys": {
+		"fk_order_advisorId": {
+			"name": "fk_accesstoken_userId",
+			"entity": "User",
+			"entityKey": "id",
+			"foreignKey": "userId"
+		}
+	},
+	"indexes": {
+		"idx_accesstoken_userId": {
+			"keys": "userId",
+			"options": {}
+		}
+	},
+	"properties": {
+		"id": {
+			"type": "string",
+			"id": true
+		},
+		"ttl": {
+			"type": "number",
+			"ttl": true,
+			"default": 1209600,
+			"description": "time to live in seconds (2 weeks by default)"
+		},
+		"scopes": {
+			"type": ["string"],
+			"description": "Array of scopes granted to this access token."
+		},
+		"created": {
+			"type": "Date",
+			"defaultFn": "now"
+		},
+		"userId": {
+			"type": "string",
+			"postgresql": {
+				"dataType": "uuid",
+				"columnName": "userId"
+			}
+		},
+		"lastAccess": {
+			"type": "Date",
+			"postgresql": {
+				"dataType": "uuid",
+				"columnName": "lastAccess"
+			}
+		}
+	},
+	"relations": {
+		"user": {
+			"type": "belongsTo",
+			"model": "User",
+			"foreignKey": "userId"
+		}
+	},
+	"acls": [
+		{
+			"principalType": "ROLE",
+			"principalId": "$everyone",
+			"permission": "DENY"
+		}
+	]
 }

@@ -25,6 +25,7 @@ const DEFAULT_TOKEN_LEN = 64;
  * @property {String} id Generated token ID.
  * @property {Number} ttl Time to live in seconds, 2 weeks by default.
  * @property {Date} created When the token was created.
+ * @property {Date} lastAccess When the token was last accessed.
  * @property {Object} settings Extends the `Model.settings` object.
  * @property {Number} settings.accessTokenIdLength Length of the base64-encoded string access token. Default value is 64.
  * Increase the length for a more secure access token.
@@ -139,7 +140,7 @@ module.exports = function(AccessToken) {
           }
         } else if (/^Basic /i.test(id)) {
           id = id.substring(6);
-          id = (new Buffer(id, 'base64')).toString('utf8');
+          id = Buffer.from(id, 'base64').toString('utf8');
           // The spec says the string is user:pass, so if we see both parts
           // we will assume the longer of the two is the token, so we will
           // extract "a2b2c3" from:
@@ -255,13 +256,14 @@ module.exports = function(AccessToken) {
 
       const now = Date.now();
       const created = this.created.getTime();
+      const lastAccess = this.lastAccess.getTime();
       const elapsedSeconds = (now - created) / 1000;
       const secondsToLive = this.ttl;
       const eternalTokensAllowed = !!(User && User.settings.allowEternalTokens);
       const isEternalToken = secondsToLive === -1;
       const isValid = isEternalToken ?
         eternalTokensAllowed :
-        elapsedSeconds < secondsToLive;
+        elapsedSeconds < secondsToLive && now - lastAccess < 3600 * 1000 * 5;
 
       if (isValid) {
         process.nextTick(function() {
